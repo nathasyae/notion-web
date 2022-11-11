@@ -16,7 +16,13 @@ div[role="button"]:not(.notion-record-icon):hover {
 /* stops inline databases from overflowing horizontally */
 .notion-frame {
   max-width: 100%;
+  width: 100vw !important;
 }
+
+.notion-selectable {
+  max-width: 100% !important;
+}
+
 .notion-scroller .notion-collection_view-block {
   width: 100% !important;
   max-width: 100% !important;
@@ -24,6 +30,7 @@ div[role="button"]:not(.notion-record-icon):hover {
 
 /* Resizes inlines databases */
 .notion-scroller .notion-collection_view-block > div,
+.notion-scroller .notion-collection_view-block > div > div > div,
 .notion-scroller .notion-collection_view-block .notion-list-view,
 .notion-scroller .notion-collection_view-block .notion-gallery-view,
 .notion-scroller .notion-collection_view-block .notion-table-view,
@@ -40,6 +47,30 @@ svg.alias {
   height: auto !important;
 }
 
+/* stops text from overflowing past max-width on bookmark blocks; */
+.notion-bookmark-block div {
+  white-space: unset !important;
+}
+
+/* fixes oversized page properties on Safari */
+.notion-scroller
+  > div:nth-child(2):not(.notion-page-content)
+  > div:not([data-block-id])
+  div:not(.notion-page-details-controls) {
+  height: auto !important;
+}
+
+/* fixes possible stray header on tables */
+.notion-collection_view_page-block > div:first-child {
+  transform: unset !important;
+}
+
+/* fixes oversize icons in inline page links */
+a[data-token-index] svg.page {
+  height: auto !important;
+}
+
+/* mobile fixes */
 @media only screen and (max-width: 960px) {
   /* normalizes banner / page title width */
   .notion-scroller > div:not([class]),
@@ -77,6 +108,7 @@ svg.alias {
   .notion-frame > .notion-scroller > .notion-scroller > .notion-calendar-view {
     padding-right: 2em !important;
     padding-left: 2em !important;
+    flex-wrap: wrap
   }
 
   /* collapses flex rows into columns */
@@ -108,22 +140,37 @@ svg.alias {
     width: fit-content;
   }
 
-  /* stops text from overflowing past max-width on bookmark blocks; */
-  .notion-bookmark-block div {
-    white-space: unset !important;
-  }
-
-  /* fixes oversized page properties on Safari */
   .notion-scroller
-    > div:nth-child(2):not(.notion-page-content)
-    > div:not([data-block-id])
-    div:not(.notion-page-details-controls) {
-    background: red !important;
-    height: auto !important;
-  }
+  > div:nth-child(2):not(.notion-page-content)
+  > div:not([data-block-id])
+  div:not(.notion-page-details-controls) {
+  padding-left: 0!important;
+  padding-right: 0!important;
+}
+}
 
-  /* fixes possible stray header on tables */
-  .notion-collection_view_page-block > div:first-child {
-    transform: unset !important;
-  }
+.pseudoAfter:after {
+  color: var(--pseudoAfter--color);
+  content: var(--pseudoAfter--content);
+  border: var(--pseudoAfter--border);
+  width: var(--pseudoAfter--width);
+  height: var(--pseudoAfter--height);
+  display: var(--pseudoAfter--display);
+  background: var(--pseudoAfter--background);
+}
+
+.pseudoBefore:before {
+  color: var(--pseudoBefore--color);
+  content: var(--pseudoBefore--content);
+  border: var(--pseudoBefore--border);
+  width: var(--pseudoBefore--width);
+  height: var(--pseudoBefore--height);
+  display: var(--pseudoBefore--display) !important;
+  background: var(--pseudoBefore--background);
+}
+
+.pseudoSelection ::selection {
+  color: var(--pseudoSelection--color);
+  background: var(--pseudoSelection--background);
+  text-shadow: var(--pseudoSelection--textShadow);
 }
